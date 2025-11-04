@@ -18,6 +18,10 @@ class DeleteVariantsLoadingState extends AppStates {}
 class DeleteVariantsSuccessState extends AppStates {}
 class DeleteVariantsErrorState extends AppStates {}
 
+class GetProfileLoadingState extends AppStates {}
+class GetProfileSuccessState extends AppStates {}
+class GetProfileErrorState extends AppStates {}
+
 class UpdateVariantsLoadingState extends AppStates {}
 class UpdateVariantsSuccessState extends AppStates {}
 class UpdateVariantsErrorState extends AppStates {}

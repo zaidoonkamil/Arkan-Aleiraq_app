@@ -8,6 +8,7 @@ import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../model/GetProducts.dart';
+import '../model/ProfileModel.dart';
 import '../network/remote/dio_helper.dart';
 import '../widgets/show_toast.dart';
 
@@ -208,5 +209,49 @@ class AppCubit extends Cubit<AppStates> {
       }
     });
   }
+
+
+  List<ProfileModel> profileModel = [];
+  void getProfile({required BuildContext context,required String name,}) {
+    emit(GetProfileLoadingState());
+    DioHelper.getData(
+      url: '/users/search?name=$name',
+    ).then((value) {
+      profileModel = (value.data as List).map((item) => ProfileModel.fromJson(item as Map<String, dynamic>)).toList();
+      emit(GetProfileSuccessState());
+    }).catchError((error) {
+      if (error is DioError) {
+        showToastError(text: error.toString(), context: context,);
+        print(error.toString());
+        emit(GetProfileErrorState());
+      }else {
+        print("Unknown Error: $error");
+      }
+    });
+  }
+
+  void deleteUser({required String idUser,required BuildContext context}) {
+    emit(DeleteProductsLoadingState());
+
+    DioHelper.deleteData(
+      url: '/users/$idUser',
+    ).then((value) {
+      profileModel.removeWhere((users) => users.id.toString() == idUser);
+      showToastSuccess(
+        text: 'تم الحذف بنجاح',
+        context: context,
+      );
+      emit(DeleteProductsSuccessState());
+    }).catchError((error) {
+      if (error is DioError) {
+        showToastError(text: error.toString(),context: context,);
+        print(error.toString());
+        emit(DeleteProductsErrorState());
+      }else {
+        print("Unknown Error: $error");
+      }
+    });
+  }
+
 
 }

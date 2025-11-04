@@ -1,6 +1,8 @@
 import 'package:arkan_aleiraq/core/widgets/constant.dart';
 import 'package:flutter/material.dart';
 
+import '../ navigation/navigation.dart';
+
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({super.key});
 
@@ -54,7 +56,11 @@ class CustomAppBarBack extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Icon(Icons.arrow_back_ios_new,color: Colors.black87,),
+            GestureDetector(
+                onTap: (){
+                  navigateBack(context);
+                },
+                child: Icon(Icons.arrow_back_ios_new,color: Colors.black87,)),
             Image.asset('assets/images/$logo',height: 30,width: 30,),
             Container(width: 20,),
           ],
