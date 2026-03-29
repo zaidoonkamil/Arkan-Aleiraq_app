@@ -2,6 +2,7 @@ import 'package:arkan_aleiraq/core/%20navigation/navigation.dart';
 import 'package:arkan_aleiraq/features/admin/add_products.dart';
 import 'package:arkan_aleiraq/features/admin/add_sender.dart';
 import 'package:arkan_aleiraq/features/admin/add_user.dart';
+import 'package:arkan_aleiraq/features/admin/all_users.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -109,6 +110,20 @@ class HomeAdmin extends StatelessWidget {
                                 color: primaryColor,
                               ),
                               child: Center(child: Text('بحث عن مستخدم',style: TextStyle(color: Colors.white),)),
+                            ),
+                          ),
+                          SizedBox(height: 10,),
+                          GestureDetector(
+                            onTap: (){
+                              navigateTo(context, AllUsers());
+                            },
+                            child: Container(
+                              width: double.maxFinite,
+                              height: 40,
+                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
+                                color: primaryColor,
+                              ),
+                              child: Center(child: Text('كل المستخدمين',style: TextStyle(color: Colors.white),)),
                             ),
                           ),
                           SizedBox(height: 10,),

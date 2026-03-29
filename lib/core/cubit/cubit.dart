@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../model/AllUserModel.dart';
 import '../model/GetProducts.dart';
 import '../model/ProfileModel.dart';
 import '../network/remote/dio_helper.dart';
@@ -247,6 +248,25 @@ class AppCubit extends Cubit<AppStates> {
         showToastError(text: error.toString(),context: context,);
         print(error.toString());
         emit(DeleteProductsErrorState());
+      }else {
+        print("Unknown Error: $error");
+      }
+    });
+  }
+
+  AllUserModel? allUserModel;
+  void getAllUser({required BuildContext context,}) {
+    emit(GetAllUserLoadingState());
+    DioHelper.getData(
+      url: '/usersOnly',
+    ).then((value) {
+      allUserModel = AllUserModel.fromJson(value.data);
+      emit(GetAllUserSuccessState());
+    }).catchError((error) {
+      if (error is DioError) {
+        showToastError(text: error.toString(), context: context,);
+        print(error.toString());
+        emit(GetAllUserErrorState());
       }else {
         print("Unknown Error: $error");
       }
